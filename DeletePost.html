@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Delete User Posts</title>
+  </head>
+  <body>
+    <form action="DeletePost.php" method="post">
+      <?php
+        $mysqli = new mysqli("mysql.eecs.ku.edu", "wteeple", "teeplepass91", "wteeple");
+        $query = "SELECT Users.user_id, Posts.content, Posts.post_id FROM Users INNER JOIN Posts ON Users.user_id=Posts.author_id ORDER BY Posts.post_id";
+
+        if ($result = $mysqli->query($query)) {
+          echo "<table border = '1'>";
+          echo "<tr><td>Posts by User</td></tr>";
+          echo "<tr><td>User/Author ID</td><td>Post ID</td><td>Post Content</td><td>Delete?</td></tr>";
+          while ($row = $result->fetch_assoc()) {
+              echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["post_id"] . "</td><td>" . $row["content"] . "</td><td><input type=\"checkbox\" value=\"" . $row["post_id"] . "\" name=\"" . $row["post_id"] . "\"></td></tr>";
+          }
+        }
+        echo "</table>"; ?>
+      <br><input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
